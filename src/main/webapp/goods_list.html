@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+</head>
+<body>
+
+    <center>
+        <div id="app">
+
+            <table rules="all" border="1">
+                <tr align="center">
+                    <td colspan="11">按照商品名称：<input type="text" size="4" v-model="searchEntity.gname"/></td>
+                </tr>
+                <tr align="center">
+                    <td colspan="11">
+                        按照价格:<input type="number" size="5" v-model="searchEntity.sprice"/>--至--
+                        <input type="number" size="5" v-model="searchEntity.eprice" /><button @click="findAll()">检索</button>
+                    </td>
+                </tr>
+                <tr align="center" bgcolor="#00ffff">
+                    <td><button @click="goodsBean={},addGoods(),getProList()">新增</button></td>
+                </tr>
+                <tr align="center" bgcolor="blue">
+                    <td>商品编号</td>
+                    <td>商品名称</td>
+                    <td>商品价格</td>
+                    <td>商品类型</td>
+                    <td>商品库存</td>
+
+                </tr>
+                <tr align="center" v-for="g in goodsList">
+                    <td>{{g.gid}}</td>
+                    <td>{{g.gname}}</td>
+                    <td>{{g.gprice}}</td>
+                    <td>{{g.gtype}}</td>
+                    <td>{{g.gstock}}</td>
+
+                </tr>
+                <tr align="center">
+                    <td colspan="100">当前{{page.currentPage}}/{{page.pageCount}}页，共{{page.count}}条记录;
+                        <button @click="paging(1)">首页</button>
+                        <button @click="paging(page.previousPage)">上一页</button>
+                        <button @click="paging(page.nextPage)">下一页</button>
+                        <button @click="paging(page.pageCount)">尾页</button>
+                        跳转到:<input type="text" size="3" v-model="searchEntity.yema"/><button @click="findAll()">go</button>
+                    </td>
+                </tr>
+            </table>
+            <div id="a2" style="display: none">
+                <table border="1" rules="all">
+                    <tr>
+                        <td>商品名称</td>
+                        <td><input type="text" v-model="goodsBean.gname"/></td>
+                    </tr>
+
+                    <tr>
+                        <td>商品价格</td>
+                        <td><input type="text" v-model="goodsBean.gprice" /></td>
+                    </tr>
+                    <tr>
+                        <td>商品类型</td>
+                        <td><input type="text" v-model="goodsBean.gtype" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            请选择商品类型：
+                            <select id="pro" @change="changepro($event)">
+                                <option v-bind:value="p.tid" v-for="p in proList">{{p.tname}}</option>
+                            </select>--
+                            <select id="city" @change="changecity($event)">
+                                <option v-bind:value="c.tid" v-for="c in cityList">{{c.tname}}</option>
+                            </select>--
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>商品库存</td>
+                        <td><input type="text" v-model="goodsBean.gstock" /></td>
+                    </tr>
+                    <tr align="center">
+                        <td colspan="2">
+                            <button @click="closeWin">关闭</button>
+                            <button @click="saveGoods">保存</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </center>
+
+</body>
+<script src="vuejs/vuejs-2.5.16.js"></script>
+<script src="vuejs/axios-0.18.0.js"></script>
+<script src="vuejs/goods.js"></script>
+</html>
